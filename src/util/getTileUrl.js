@@ -1,7 +1,6 @@
  const zRegEx = /\{z\}/g;
  const xRegEx = /\{x\}/g;
  const yRegEx = /\{y\}/g;
-
   
  function getTileUrl(template,xyz,tokenOption){
 	 let match = /\{([a-z])-([a-z])\}/.exec(template);
@@ -27,7 +26,10 @@
 	if(tokenOption){
 		const token_key=tokenOption.key;
 		const token_value=getRandomToken(tokenOption.values);
-		url=`${url}?${token_key}=${token_value};`
+		if(url.includes('?'))
+			url=`${url}&${token_key}=${token_value}`;
+		else
+			url=`${url}?${token_key}=${token_value}`;
 	}
 	return url;
   }

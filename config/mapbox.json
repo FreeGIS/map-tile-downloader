@@ -1,0 +1,16 @@
+{
+    "bound":[118,32,119,33],
+    "levels":[1,2,3,4,5,6,7,8,9,10],
+    "parallel":50,
+    "downPath":"F://tiles1",
+    "tileformat":"pbf",
+    "mapurl":"https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/{z}/{x}/{y}.vector.pbf",
+    "tokenInfo":{
+        "key":"access_token",
+        "values":[
+            "pk.xxxxx",
+            "pk.yyyyy",
+            "pk.zzzzz"
+        ]
+    }
+}

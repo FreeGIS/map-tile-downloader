@@ -1,3 +1,5 @@
+const colors=require('./colors');
+
 function FreeTile_Status(xyzCount){
     this.sucessCount=0;//成功总数
     this.errorCount=0; //错误总数
@@ -63,7 +65,7 @@ FreeTile_Status.prototype.showStatus=function(){
     //如果成功数为100的整除或者全部成功
     if(this.currentIndex%100==0||this.sucessCount==this.tileCount)
     console.info(
-        ('当前进度:'+this.currentIndex+'/'+this.tileCount).info,
+        ('当前进度:'+this.currentIndex+'/'+this.tileCount+' '+(this.currentIndex*100.0/this.tileCount).toFixed(2)+'%').info,
         ('请求成功:'+this.sucessCount).info,
         ('请求失败:'+this.errorCount).error
     );//提示进度

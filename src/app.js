@@ -1,7 +1,6 @@
 const fs = require("fs");
 const superagent = require('superagent');
 const getTileUrl=require('./util/getTileUrl');
-const colors=require('./util/colors');
 const FreeTile_Status=require('./util/freetile_status');
 const createDirs=require('./util/create_dir');
 const {bound2xyzs}=require('./util/xyz');
