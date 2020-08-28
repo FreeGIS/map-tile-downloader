@@ -1,0 +1,27 @@
+{
+  "name": "maptiletool",
+  "version": "1.0.0",
+  "description": "下载公网地图服务器中以xyz及其形变性质的地图切片，用于离线GIS系统建设使用",
+  "main": "index.js",
+  "bin": {
+    "freetile": "./bin/freetile.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FreeGIS/MapTileTool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FreeGIS/MapTileTool/issues"
+  },
+  "homepage": "https://github.com/FreeGIS/MapTileTool#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^6.1.0",
+    "superagent": "^6.0.0"
+  }
+}
