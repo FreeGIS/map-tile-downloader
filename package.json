@@ -2,7 +2,6 @@
   "name": "maptiletool",
   "version": "1.0.0",
   "description": "下载公网地图服务器中以xyz及其形变性质的地图切片，用于离线GIS系统建设使用",
-  "main": "index.js",
   "bin": {
     "freetile": "./bin/freetile.js"
   },

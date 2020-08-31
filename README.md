@@ -32,7 +32,7 @@ npm link
 npm安装命令行形式：
 
 ```
-npm install MapTileTool -g
+npm install npm i maptiletool -g
 ```
 
 验证安装：
