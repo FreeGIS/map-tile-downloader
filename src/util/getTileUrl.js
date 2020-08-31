@@ -2,7 +2,7 @@
  const xRegEx = /\{x\}/g;
  const yRegEx = /\{y\}/g;
   
- function getTileUrl(template,xyz,tokenOption){
+ function getTileUrl(template,xyz){
 	 let match = /\{([a-z])-([a-z])\}/.exec(template);
 	 if (match) {
 		const startCharCode = match[1].charCodeAt(0);
@@ -22,15 +22,6 @@
 	let url=template.replace(zRegEx, xyz[0].toString())
 	.replace(xRegEx, xyz[1].toString())
 	.replace(yRegEx, xyz[2].toString());
-	//设置一些token什么的
-	if(tokenOption){
-		const token_key=tokenOption.key;
-		const token_value=getRandomToken(tokenOption.values);
-		if(url.includes('?'))
-			url=`${url}&${token_key}=${token_value}`;
-		else
-			url=`${url}?${token_key}=${token_value}`;
-	}
 	return url;
   }
   
@@ -45,4 +36,4 @@
 	let _index=Math.round(Math.random()*(token_length-1));
 	return tokens[_index];
 }
-module.exports = getTileUrl;
+module.exports = {getTileUrl,getRandomToken};

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const superagent = require('superagent');
-const getTileUrl=require('./util/getTileUrl');
+const {getTileUrl,getRandomToken}=require('./util/getTileUrl');
 const FreeTile_Status=require('./util/freetile_status');
 const createDirs=require('./util/create_dir');
 const {bound2xyzs}=require('./util/xyz');
@@ -21,15 +21,13 @@ function run(config){
     const levels=TileConfig.levels;
     //根据地理范围和级别，获取下载的xyz区间
     const xyzMetedata=getXYZMetedata(bound,levels);
-  
+    
 	//设置进度提示总数
     freetile_status.setTileCount(xyzMetedata.tileCount);
     //获取下载列表
     const xyzs=xyzMetedata.xyzs;
-    //执行下载任务
+    //执行下载任务，同步方法仅仅内部同步，外部仍然跳下一行执行
     tileTask(xyzs);
-    //执行错误切片补充下载
-    errorTileTask();
 }
 
 //切片下载元数据
@@ -49,7 +47,6 @@ function getXYZMetedata(bound,levels){
 
 //切片下载任务
 async function tileTask(xyz_obj){
-   
     let promises=[];
     for(let key in xyz_obj){
         const z=parseInt(key);
@@ -72,11 +69,13 @@ async function tileTask(xyz_obj){
         await Promise.all(promises);
         promises=[];
     }
+    //执行错误补充下载
+    errorTileTask();
 }
 
 async function errorTileTask(){
     //如果错误切片数量为0，结束递归下载
-	if(freetile_status.errorCount==0){
+	if(freetile_status.getErrorTileCount()==0){
 		return;
     }
     else{
@@ -104,36 +103,79 @@ async function errorTileTask(){
 function getTile2Disk(xyz){
     var p = new Promise(function(resolve, reject){
         //存储到本地的目录
-        let target=`${TileConfig.downPath}/${xyz[0]}/${xyz[1]}/${xyz[2]}.${TileConfig.tileformat}`;
+        const target=`${TileConfig.downPath}/${xyz[0]}/${xyz[1]}/${xyz[2]}.${TileConfig.tileformat}`;
         //在线切片url地址
         let source=getTileUrl(TileConfig.mapurl,xyz,TileConfig.tokenInfo);
         //递归创建目录
         createDirs(target);
-        //创建写入文件流
-        var writeStream=fs.createWriteStream(target,{autoClose:true});
-        let userAgent=getRandomUserAgent();
-        //从远程服务器请求 切片，写入本地磁盘文件
-        superagent.get(source)
-                .responseType('blob')
-                .set(userAgent).timeout({
-                    response: 30000,  
-                    deadline: 60000, 
-                })
-                .retry(3)
-                .on('error',function(err){
-                    console.log(err);
-                    //下载处理失败，记录失败瓦片状态，一般是 超时
-                    freetile_status.addErrorTile(xyz);
-                    reject(err);
-                })
-                .pipe(writeStream)
-                .on('finish',function(){
-                    //下载成功，判定处理完毕
-                    freetile_status.processTile(xyz);
+        const userAgent=getRandomUserAgent();
+        //设置一些token什么的
+        if(!TileConfig.tokenInfo){
+            //从远程服务器请求 切片，写入本地磁盘文件
+            superagent.get(source)
+                    .responseType('blob')
+                    .set(userAgent).timeout({
+                        response: 30000,  
+                        deadline: 60000, 
+                    })      
+                    .retry(3)
+                    .end(getTileCallback);
+        }
+	    else {
+            if(TileConfig.tokenInfo.location==="url"){
+                const token_key=TileConfig.tokenInfo.key;
+                const token_value=getRandomToken(TileConfig.tokenInfo.values);
+            
+                if(source.includes('?'))
+                    source=`${source}&${token_key}=${token_value}`;
+                else
+                    source=`${source}?${token_key}=${token_value}`;
+                console.log(source);
+                 //从远程服务器请求 切片，写入本地磁盘文件
+                superagent.get(source)
+                    .responseType('blob')
+                    .set(userAgent).timeout({
+                        response: 30000,  
+                        deadline: 60000, 
+                    })      
+                    .retry(3)
+                    .end(getTileCallback);
+            }
+            else if(TileConfig.tokenInfo.location==="headers"){
+                const token_key=TileConfig.tokenInfo.key;
+                const token_value=getRandomToken(TileConfig.tokenInfo.values);
+                 //从远程服务器请求 切片，写入本地磁盘文件
+                 superagent.get(source)
+                 .responseType('blob')
+                 .set(token_key,token_value)
+                 .set(userAgent).timeout({
+                     response: 30000,  
+                     deadline: 60000, 
+                 })      
+                 .retry(3)
+                 .end(getTileCallback);
+            }
+        }
+        function getTileCallback(err,res){
+            if(err){
+                freetile_status.addErrorTile(xyz);
+                reject(err);
+            } else {
+                if(res.status==200){
+                    //写入磁盘
+                    fs.writeFileSync(target,res.body);
+                    freetile_status.addSuccessTile(xyz);
                     resolve('success');
-        });
+                }
+            }
+        }
+               
+    }).then(undefined, (error) => {
+        //错误不做额外处理
     });
     return p;
 }
+
+
 
 module.exports=run;

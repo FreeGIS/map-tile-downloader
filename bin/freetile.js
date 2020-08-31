@@ -26,6 +26,3 @@ process.on('SIGINT', function (e) {
   console.log(e);
   process.exit();
 });
-process.on('exit', (code) => {
-  console.info(`退出码: ${code}`);
-});

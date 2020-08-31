@@ -20,8 +20,9 @@
   },
   "homepage": "https://github.com/FreeGIS/MapTileTool#readme",
   "dependencies": {
-    "colors": "^1.4.0",
+    "cli-color": "^2.0.0",
     "commander": "^6.1.0",
+    "single-line-log": "^1.1.2",
     "superagent": "^6.0.0"
   }
 }

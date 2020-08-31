@@ -6,6 +6,7 @@
     "tileformat":"pbf",
     "mapurl":"https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/{z}/{x}/{y}.vector.pbf",
     "tokenInfo":{
+        "location":"url",
         "key":"access_token",
         "values":[
             "pk.xxxxx",

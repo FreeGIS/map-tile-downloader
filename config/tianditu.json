@@ -6,6 +6,7 @@
     "tileformat":"png",
     "mapurl":"https://t{0-7}.tianditu.gov.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}",
     "tokenInfo":{
+        "location":"url",
         "key":"tk",
         "values":[
             "aaaa",
