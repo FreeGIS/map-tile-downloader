@@ -2,7 +2,7 @@
     "bound":[118,32,119,33],
     "levels":[1,2,3,4,5,6,7,8,9,10,11,12,13,14],
     "parallel":50,
-    "downPath":"E://tiles",
+    "downPath":"c://esritiles",
     "tileformat":"png",
     "mapurl":"http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}"
 }

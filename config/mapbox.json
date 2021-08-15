@@ -1,17 +1,15 @@
 {
-    "bound":[118,32,119,33],
-    "levels":[1,2,3,4,5,6,7,8,9,10],
+    "bound":[119.78,31.64,120.25,31.95],
+    "levels":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
     "parallel":50,
-    "downPath":"F://tiles1",
+    "downPath":"C://tiles1",
     "tileformat":"pbf",
     "mapurl":"https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/{z}/{x}/{y}.vector.pbf",
     "tokenInfo":{
         "location":"url",
         "key":"access_token",
         "values":[
-            "pk.xxxxx",
-            "pk.yyyyy",
-            "pk.zzzzz"
+            "pk.xxx"
         ]
     }
 }

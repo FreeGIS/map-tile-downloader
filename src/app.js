@@ -6,7 +6,6 @@ const createDirs=require('./util/create_dir');
 const {bound2xyzs}=require('./util/xyz');
 const getRandomUserAgent=require('./util/userAgent');
 
-
     
 //config设置为全局变量
 let TileConfig;
@@ -39,8 +38,8 @@ function getXYZMetedata(bound,levels){
     for(let i=0;i<levels.length;i++){
         const xyzs=bound2xyzs(bound,levels[i]);
         //行列号之差做乘
-        xyzMetedata.tileCount+=(xyzs[1][1]-xyzs[0][1]+1)*(xyzs[1][2]-xyzs[0][2]+1);
-        xyzMetedata.xyzs[levels[i]]=bound2xyzs(bound,levels[i]);
+        xyzMetedata.tileCount+=(xyzs[1][0]-xyzs[0][0]+1)*(xyzs[1][1]-xyzs[0][1]+1);
+        xyzMetedata.xyzs[levels[i]]=xyzs;
     }
     return xyzMetedata;
 }
@@ -50,10 +49,10 @@ async function tileTask(xyz_obj){
     let promises=[];
     for(let key in xyz_obj){
         const z=parseInt(key);
-        const min_col=xyz_obj[key][0][1];
-        const max_col=xyz_obj[key][1][1];
-        const min_row=xyz_obj[key][0][2];
-        const max_row=xyz_obj[key][1][2];
+        const min_col=xyz_obj[key][0][0];
+        const max_col=xyz_obj[key][1][0];
+        const min_row=xyz_obj[key][0][1];
+        const max_row=xyz_obj[key][1][1];
         for(let row=min_row;row<=max_row;row++){
             for(let col=min_col;col<=max_col;col++){
                 promises.push(getTile2Disk([z,col,row]));
@@ -130,7 +129,6 @@ function getTile2Disk(xyz){
                     source=`${source}&${token_key}=${token_value}`;
                 else
                     source=`${source}?${token_key}=${token_value}`;
-                console.log(source);
                  //从远程服务器请求 切片，写入本地磁盘文件
                 superagent.get(source)
                     .responseType('blob')
