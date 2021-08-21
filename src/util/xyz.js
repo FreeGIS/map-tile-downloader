@@ -7,4 +7,4 @@ function bound2xyzs(bound,z){
 	return [xyz1,xyz2];
 }
 
-module.exports = {xyz2bound,coor2xyz,bound2xyzs};
+module.exports = {bound2xyzs};
