@@ -1,4 +1,4 @@
-# MapTileTool
+# Map-Tile-DownLoader
 ## 一 作用
 
 下载公网地图服务器中以xyz及其类xyz形式的地图切片，用于离线GIS系统底图使用。该xyz形式为基于墨卡托投影的坐标系，切片大小为256*256规格。
@@ -23,8 +23,8 @@
 源码形式：
 
 ```shell
-git clone git@github.com:FreeGIS/MapTileTool.git
-cd MapTileTool
+git clone git@github.com:FreeGIS/map-tile-downloader.git
+cd map-tile-downloader
 npm install
 npm link
 ```
@@ -32,7 +32,7 @@ npm link
 npm安装命令行形式：
 
 ```
-npm i maptiletool -g
+npm i map-tile-downloader -g
 ```
 
 验证安装：

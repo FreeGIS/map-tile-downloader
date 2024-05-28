@@ -3,6 +3,7 @@
  const yRegEx = /\{y\}/g;
   
  function getTileUrl(template,xyz){
+	//console.log(template,xyz);
 	 let match = /\{([a-z])-([a-z])\}/.exec(template);
 	 if (match) {
 		const startCharCode = match[1].charCodeAt(0);
@@ -18,7 +19,6 @@
 		   template=template.replace(match[0], charCode.toString());
 	   }
 	 }
-	
 	let url=template.replace(zRegEx, xyz[0].toString())
 	.replace(xRegEx, xyz[1].toString())
 	.replace(yRegEx, xyz[2].toString());

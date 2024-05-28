@@ -1,0 +1,8 @@
+{
+    "bound":[120,38.5,136.5,51.5],
+    "levels":[9,10,11,12,13],
+    "parallel":50,
+    "downPath":"c://esritiles",
+    "tileformat":"pbf",
+    "mapurl":"https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{y}/{x}.pbf"
+}
