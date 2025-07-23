@@ -34,9 +34,7 @@ function run(config) {
 function getXYZMetedata(bound, levels) {
     const mktbound1 = proj4('EPSG:4326', 'EPSG:3857', [bound[0], bound[1]]);
     const mktbound2 = proj4('EPSG:4326', 'EPSG:3857', [bound[2], bound[3]]);
-    console.log(mktbound1, mktbound2);
     const mktbound = [mktbound1[0], mktbound1[1], mktbound2[0], mktbound2[1]];
-    //const mktbound = 
     let xyzMetedata = {
         tileCount: 0,
         xyzs: {}
@@ -52,7 +50,6 @@ function getXYZMetedata(bound, levels) {
 
 //切片下载任务
 async function tileTask(xyz_obj) {
-    console.log(xyz_obj);
     let promises = [];
     for (let key in xyz_obj) {
         const z = parseInt(key);
@@ -108,22 +105,13 @@ async function errorTileTask() {
 //切片下载
 function getTile2Disk(xyz) {
     var p = new Promise(function (resolve, reject) {
-        // 判断本地磁盘有没有
-        /*const xyzpng = 'c://basemap//terrain' + '//' + xyz[0] + '//' + xyz[1] + '//' + xyz[2] + '.png';
-        if(fs.existsSync(xyzpng)){
-            freetile_status.addSuccessTile(xyz);
-            resolve('success');
-            return;
-        }*/
         //存储到本地的目录
         const target = `${TileConfig.downPath}/${xyz[0]}/${xyz[1]}/${xyz[2]}.${TileConfig.tileformat}`;
-
-  if(fs.existsSync(target)){
+        if (fs.existsSync(target)) {
             freetile_status.addSuccessTile(xyz);
             resolve('success');
             return;
         }
-
         //在线切片url地址
         let source = getTileUrl(TileConfig.mapurl, xyz, TileConfig.tokenInfo);
         //递归创建目录
@@ -145,7 +133,6 @@ function getTile2Disk(xyz) {
             if (TileConfig.tokenInfo.location === "url") {
                 const token_key = TileConfig.tokenInfo.key;
                 const token_value = getRandomToken(TileConfig.tokenInfo.values);
-
                 if (source.includes('?'))
                     source = `${source}&${token_key}=${token_value}`;
                 else
@@ -177,7 +164,7 @@ function getTile2Disk(xyz) {
         }
         function getTileCallback(err, res) {
             if (err) {
-              console.log(xyz);
+                console.log(xyz);
                 freetile_status.addErrorTile(xyz);
                 reject(err);
             } else {
