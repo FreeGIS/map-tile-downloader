@@ -20,10 +20,9 @@
   "homepage": "https://github.com/FreeGIS/map-tile-downloader#readme",
   "dependencies": {
     "cli-color": "^2.0.0",
-    "commander": "^6.1.0",
-    "global-mercator": "^3.1.0",
+    "commander": "^14.0.0",
     "proj4": "^2.9.0",
     "single-line-log": "^1.1.2",
-    "superagent": "^6.0.0"
+    "superagent": "^10.2.3"
   }
 }

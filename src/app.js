@@ -109,14 +109,21 @@ async function errorTileTask() {
 function getTile2Disk(xyz) {
     var p = new Promise(function (resolve, reject) {
         // 判断本地磁盘有没有
-        const xyzpng = 'c://basemap//terrain' + '//' + xyz[0] + '//' + xyz[1] + '//' + xyz[2] + '.png';
+        /*const xyzpng = 'c://basemap//terrain' + '//' + xyz[0] + '//' + xyz[1] + '//' + xyz[2] + '.png';
         if(fs.existsSync(xyzpng)){
             freetile_status.addSuccessTile(xyz);
             resolve('success');
             return;
-        }
+        }*/
         //存储到本地的目录
         const target = `${TileConfig.downPath}/${xyz[0]}/${xyz[1]}/${xyz[2]}.${TileConfig.tileformat}`;
+
+  if(fs.existsSync(target)){
+            freetile_status.addSuccessTile(xyz);
+            resolve('success');
+            return;
+        }
+
         //在线切片url地址
         let source = getTileUrl(TileConfig.mapurl, xyz, TileConfig.tokenInfo);
         //递归创建目录
@@ -170,6 +177,7 @@ function getTile2Disk(xyz) {
         }
         function getTileCallback(err, res) {
             if (err) {
+              console.log(xyz);
                 freetile_status.addErrorTile(xyz);
                 reject(err);
             } else {

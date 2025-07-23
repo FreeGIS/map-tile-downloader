@@ -1,15 +1,25 @@
 {
-    "bound":[70,10,130,50],
-    "levels":[1,2,3,4,5,6,7,8],
-    "parallel":50,
-    "downPath":"C://tiles1",
-    "tileformat":"pbf",
-    "mapurl":"https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/{z}/{x}/{y}.vector.pbf",
-    "tokenInfo":{
-        "location":"url",
-        "key":"access_token",
-        "values":[
-            "pk.xxx"
+    "bound": [
+        72,
+        12,
+        135,
+        55
+    ],
+    "levels": [
+      10
+    ],
+    "parallel": 50,
+    "downPath": "D://可视化竞赛//satellite",
+    "tileformat": "webp",
+    "mapurl": "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?sku=101JTR3EjHe0d",
+    "tokenInfo": {
+        "location": "url",
+        "key": "access_token",
+        "values": [
+            "pk.eyJ1IjoidTEwaW50IiwiYSI6InQtMnZvTkEifQ.c8mhXquPE7_xoB3P4Ag8cA",
+            "pk.eyJ1Ijoic3V6aWhhbiIsImEiOiJjbDQ5bG5oYm8wNGhuM2puMm5pc2s5ZTl6In0.FiBdPL1qn1xMJyphwOaP7w",
+            "pk.eyJ1IjoiY3JhenlnaXMiLCJhIjoiY2p2YWo5a3g0MHBpajN6cDd2M3FsNHBqNCJ9.LPsjRrGK9BHzXiQpvAx1UA",
+            "pk.eyJ1IjoibW9qaXB1YmxpYyIsImEiOiJjbGY5ZGsxcGgxeHRwM3RvY3J2aHFlcGpmIn0.dT5xQw1qiXH7_1TydaYY_w"
         ]
     }
 }

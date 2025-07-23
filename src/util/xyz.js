@@ -1,29 +1,38 @@
-const CoordinateSys = require('./coordinateSys');
-
-const epsg = 3857;
-const coordinateSys = new CoordinateSys(epsg);
-//地理边界转xyz范围
-function bound2xyzs(bound,tz){
-	//console.log(bound,tz);
-	const minTileXY = coordinateSys.point2Tile(bound[0], bound[1], tz);
-    const maxTileXY = coordinateSys.point2Tile(bound[2], bound[3], tz);
-	//console.log(64,63,tz,minTileXY,maxTileXY);
-    const tminx = Math.max(0, minTileXY.tileX);
-    const tminy = Math.max(0, minTileXY.tileY);
-	let tmaxx,tmaxy;
-    if (epsg === 3857) {
-      tmaxx = Math.min(Math.pow(2, tz) - 1, maxTileXY.tileX);
-      tmaxy = Math.min(Math.pow(2, tz) - 1, maxTileXY.tileY);
-    } else {
-      tmaxx = Math.min(Math.pow(2, tz + 1) - 1, maxTileXY.tileX);
-      tmaxy = Math.min(Math.pow(2, tz + 1) - 1, maxTileXY.tileY);
-    }
-
-
-
-	const xyz1 = [tminx,Math.pow(2, tz)-tmaxy,tz];
-	const xyz2 = [tmaxx,Math.pow(2, tz)-tminy,tz];
-	return [xyz1,xyz2];
+const bbox = {
+  xmin: -20037508.342789244,
+  ymin: -20037508.342789244,
+  xmax: 20037508.342789244,
+  ymax: 20037508.342789244
 }
 
-module.exports = {bound2xyzs};
+function getTileByCoors(coor, zoom) {
+  // 计算coor与bbox左上角坐标
+  const left = bbox.xmin;
+  const top = bbox.ymax;
+  const _width = coor[0] - left;
+  const _height = top - coor[1];
+  let worldTileSize = 0x01 << zoom;
+  const boundsWidth = bbox.xmax - bbox.xmin;
+  const boundsHeight = bbox.ymax - bbox.ymin;
+  const tileGeoSize = Math.max(boundsWidth, boundsHeight) * 1.0 / worldTileSize;
+  const row = Math.floor(_height / tileGeoSize);
+  const column = Math.floor(_width / tileGeoSize);
+
+  return {
+    row, column
+  }
+}
+
+
+function bound2xyzs(bound, tz) {
+  // 使用左上角，右下角，计算瓦片行列号
+  const tileinfo1 = getTileByCoors([bound[0], bound[3]], tz);
+  const tileinfo2 = getTileByCoors([bound[2], bound[1]], tz);
+  // 部分瓦片规则是从下往上，综合判断即可
+  const xyz1 = [tileinfo1.column, Math.min(tileinfo1.row, tileinfo2.row), tz];
+  const xyz2 = [tileinfo2.column, Math.max(tileinfo1.row, tileinfo2.row), tz];
+  return [xyz1, xyz2];
+}
+
+
+module.exports = { bound2xyzs };
