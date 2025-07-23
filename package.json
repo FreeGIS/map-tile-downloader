@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "下载公网地图服务器中以xyz及其形变性质的地图切片，用于离线GIS系统建设使用",
   "bin": {
-    "freetile": "./bin/freetile.js"
+    "freetile": "bin/freetile.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
