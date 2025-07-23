@@ -1,8 +1,0 @@
-{
-    "bound":[70,0,140,60],
-    "levels":[1,2,3,4,5,6,7,8,9,10],
-    "parallel":50,
-    "downPath":"C://test//tiles2",
-    "tileformat":"png",
-    "mapurl":"https://webst0{0-3}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}"
-}
